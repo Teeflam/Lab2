@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +23,7 @@ import java.net.URL;
 
 public class Authentication extends AppCompatActivity {
 
+    private Boolean connected;
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
@@ -39,14 +43,16 @@ public class Authentication extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                final TextView username = (TextView) findViewById(R.id.username);
+                final TextView password = (TextView) findViewById(R.id.password);
+                final TextView result = (TextView) findViewById(R.id.result);
                 new Thread(new Runnable() {
                     public void run() {
                         URL url = null;
                         try {
                             url = new URL("https://httpbin.org/basic-auth/bob/sympa");
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            TextView username = (TextView) findViewById(R.id.username);
-                            TextView password = (TextView) findViewById(R.id.password);
+
                             // get the username and password
                             String currentUsername = username.getText().toString();
                             String currentPassword = password.getText().toString();
@@ -56,12 +62,12 @@ public class Authentication extends AppCompatActivity {
                             try {
                                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                                 String s = readStream(in);
-
+                                final JSONObject res = new JSONObject(s);
+                                connected  = res.getBoolean("authenticated");
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        TextView result = (TextView) findViewById(R.id.result);
-                                        result.setText("My result here");
+                                        result.setText(Authentication.this.connected ? "connect" : " not connect");
                                     }
                                 });
 
@@ -69,9 +75,7 @@ public class Authentication extends AppCompatActivity {
                             } finally {
                                 urlConnection.disconnect();
                             }
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (IOException | JSONException e ) {
                             e.printStackTrace();
                         }
                     }
