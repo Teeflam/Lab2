@@ -47,17 +47,24 @@ public class Authentication extends AppCompatActivity {
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                             TextView username = (TextView) findViewById(R.id.username);
                             TextView password = (TextView) findViewById(R.id.password);
+                            // get the username and password
                             String currentUsername = username.getText().toString();
                             String currentPassword = password.getText().toString();
-
-
                             String basicAuth = "Basic " + Base64.encodeToString((currentUsername +":"+ currentPassword).getBytes(),
                                     Base64.NO_WRAP);
                             urlConnection.setRequestProperty ("Authorization", basicAuth);
-
                             try {
                                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                                 String s = readStream(in);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        TextView result = (TextView) findViewById(R.id.result);
+                                        result.setText("My result here");
+                                    }
+                                });
+
                                 Log.i("JFL", s);
                             } finally {
                                 urlConnection.disconnect();
