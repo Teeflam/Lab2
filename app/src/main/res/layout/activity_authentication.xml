@@ -8,24 +8,32 @@
     tools:context=".Authentication">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@string/username"
+        android:labelFor="@id/username"
+        android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Password" />
+        android:inputType="textPassword"
+        android:labelFor="@id/password"
+        android:text="@string/password"
+        android:importantForAutofill="no" />
+
 
     <Button
         android:id="@+id/btn_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AUTHENTICATE" />
+        android:text="@string/authenticate" />
+
+
+
 </LinearLayout>

@@ -37,24 +37,30 @@ public class Authentication extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                URL url = null;
-                try {
-                    url = new URL("http://www.android.com/");
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    try {
-                        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                        String s = readStream(in);
-                        Log.i("JFL", s);
-                    } finally {
-                        urlConnection.disconnect();
+                new Thread(new Runnable() {
+                    public void run() {
+                        URL url = null;
+                        try {
+                            url = new URL("https://www.android.com/");
+                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                            try {
+                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                                String s = readStream(in);
+                                Log.i("JFL", s);
+                            } finally {
+                                urlConnection.disconnect();
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                }).start();
             }
-        });
+
+
+            });
+        };
     }
-}
+
