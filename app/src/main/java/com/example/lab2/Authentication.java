@@ -3,9 +3,11 @@ package com.example.lab2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -41,8 +43,18 @@ public class Authentication extends AppCompatActivity {
                     public void run() {
                         URL url = null;
                         try {
-                            url = new URL("https://www.android.com/");
+                            url = new URL("https://httpbin.org/basic-auth/bob/sympa");
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                            TextView username = (TextView) findViewById(R.id.username);
+                            TextView password = (TextView) findViewById(R.id.password);
+                            String currentUsername = username.getText().toString();
+                            String currentPassword = password.getText().toString();
+
+
+                            String basicAuth = "Basic " + Base64.encodeToString((currentUsername +":"+ currentPassword).getBytes(),
+                                    Base64.NO_WRAP);
+                            urlConnection.setRequestProperty ("Authorization", basicAuth);
+
                             try {
                                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                                 String s = readStream(in);
