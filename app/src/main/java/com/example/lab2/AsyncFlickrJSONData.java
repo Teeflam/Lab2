@@ -46,7 +46,8 @@ public class AsyncFlickrJSONData extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject result) {
         try {
-            Log.i("JFL", result.toString(4));
+            String imageUrl = result.getJSONArray("items").getJSONObject(0).getJSONObject("media").getString("m");
+            Log.i("JFL", imageUrl);
         } catch (JSONException e) {
             e.printStackTrace();
         }
