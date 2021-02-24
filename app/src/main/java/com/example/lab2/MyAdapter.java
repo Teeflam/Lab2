@@ -48,16 +48,11 @@ public class MyAdapter extends BaseAdapter {
         // inflate the layout for each url
         if(convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.textviewlayout, parent, false);
+                    .inflate(R.layout.bitmaplayout, parent, false);
         }
         // retrieve the image url
         String imageUrl = (String) getItem(position);
 
-        // retrieve the text view
-        TextView url = convertView.findViewById(R.id.url_text);
-
-        // set the url
-        url.setText(imageUrl);
 
         return convertView;
     }
