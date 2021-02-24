@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
 
 import java.util.Vector;
@@ -23,8 +24,10 @@ public class MyAdapter extends BaseAdapter {
 
     // add url in the vector
     public void add(String url) {
+        // add the url
         imageUrls.add(url);
-        // show the url which is added
+
+        // log the adding
         Log.i("JFL", "Adding to adapter url: " + url);
     }
 
@@ -45,18 +48,32 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get a RequestQueue
+        // instantiate a request queue
         RequestQueue queue = MySingleton.getInstance(parent.getContext()).getRequestQueue();
+
         // inflate the layout for each url
         if(convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.bitmaplayout, parent, false);
         }
+
         // retrieve the image url
         String imageUrl = (String) getItem(position);
 
+        // retrieve the image view container
+        ImageView image = convertView.findViewById(R.id.image_bml);
+
+        // create a response listener
+        Response.Listener<Bitmap> resp_listener = bmp -> {
+            // set the image in the view
+            image.setImageBitmap(bmp);
+        };
+
         // instantiate a image request
-        ImageRequest request = new ImageRequest(imageUrl, null, 500, 500, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,null);
+        ImageRequest request = new ImageRequest(imageUrl, resp_listener, 300, 300, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,null);
+
+        // add request to the request queue
+        queue.add(request);
 
         return convertView;
     }
