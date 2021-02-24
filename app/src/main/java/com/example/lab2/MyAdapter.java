@@ -18,6 +18,8 @@ public class MyAdapter extends BaseAdapter {
     // add url in the vector
     public void add(String url) {
         imageUrls.add(url);
+        // show the url which is added
+        Log.i("JFL", "Adding to adapter url: " + url);
     }
 
     @Override
