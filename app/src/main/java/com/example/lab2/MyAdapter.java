@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+
 import java.util.Vector;
 
 public class MyAdapter extends BaseAdapter {
@@ -41,6 +43,8 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // Get a RequestQueue
+        RequestQueue queue = MySingleton.getInstance(parent.getContext()).getRequestQueue();
         // inflate the layout for each url
         if(convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
