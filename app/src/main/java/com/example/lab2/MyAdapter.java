@@ -1,13 +1,15 @@
 package com.example.lab2;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageRequest;
 
 import java.util.Vector;
 
@@ -53,6 +55,8 @@ public class MyAdapter extends BaseAdapter {
         // retrieve the image url
         String imageUrl = (String) getItem(position);
 
+        // instantiate a image request
+        ImageRequest request = new ImageRequest(imageUrl, null, 500, 500, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,null);
 
         return convertView;
     }
