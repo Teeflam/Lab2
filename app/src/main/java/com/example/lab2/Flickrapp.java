@@ -21,7 +21,8 @@ public class Flickrapp extends AppCompatActivity {
         Button getImage = (Button) findViewById(R.id.getImage);
         getImage.setOnClickListener(new GetImageOnClickListener(image));
     }
-    // handle when the user want to get to the list activity
+
+    // handle list activity
     public void onClickList(View v) {
         // start new activity
         Intent list = new Intent(getApplicationContext(), ListActivity.class);
