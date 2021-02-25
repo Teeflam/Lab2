@@ -69,8 +69,9 @@ public class MyAdapter extends BaseAdapter {
             image.setImageBitmap(bmp);
         };
 
+
         // instantiate a image request
-        ImageRequest request = new ImageRequest(imageUrl, resp_listener, 300, 300, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,null);
+        ImageRequest request = new ImageRequest(imageUrl, resp_listener, 500, 500, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,null);
 
         // add request to the request queue
         queue.add(request);
